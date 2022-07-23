@@ -1,0 +1,43 @@
+{
+    "home": {
+        "IDE": {
+            "id": 0,
+            "title": "IDE",
+            "description": "Browser-based version of Visual Studio Code. Develop in any language, install hundreeds of extensions",
+            "image": "assets/home/IDE.jpg"
+            },
+        "TERMINAL": {
+            "id": 1,
+            "title": "Terminal",
+            "description": "Full-fledged WEB-based Command Line Interface",
+            "image": "assets/home/Terminal.png"
+        },
+        "FILEBROWSER": {
+            "id": 2,
+            "title": "Filebrowser",
+            "name": "File Browser",
+            "description": "Browse, upload and download files and folders to and from the Workspace",
+            "image": "assets/home/Filebrowser.png"
+        }, 
+        "UNGIT": {
+            "id": 3,
+            "title": "Ungit",
+            "description": "Manage Git repositories and work flow using beautiful UI",
+            "image": "assets/home/Ungit.jpg"
+        }
+    },
+    "my_apps": {
+        "PORT_8029": {
+            "id": "9",
+            "title": "Port 8029",
+            "description": "My app running on port 8029",
+            "image": "port-8029.png"
+        },
+        "PORT_8030": {
+            "id": "10",
+            "title": "Port 8030",
+            "description": "My app running on port 8030",
+            "image": "port-8030.png"
+        }
+    }
+}
