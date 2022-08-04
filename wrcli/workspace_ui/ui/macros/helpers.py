@@ -4,7 +4,7 @@ Include this  {{ macros_info() }} in any page to get complete macro info
 """
 import os
 import json
-os.chdir("/home/project/workspace-utils/workspace-ui/ui")
+
 
 def get_apps_dict():
     """ Read json with app UI dataforallpages

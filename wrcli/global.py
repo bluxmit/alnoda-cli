@@ -1,0 +1,1 @@
+WORKSPACE_UI_DIR = "/home/abc/.wrk/ui"
