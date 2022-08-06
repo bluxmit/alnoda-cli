@@ -32,7 +32,7 @@ styles:
 # (tools to add to the Quickstart UI)
 pages:
   home:
-    - name: REDIS_COMMANDER
+    name: 
       port: 8032 # allowed strictly between 8031 - 8040
       path: /
       title: Redis Commander

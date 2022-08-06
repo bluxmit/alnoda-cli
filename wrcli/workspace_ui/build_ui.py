@@ -1,5 +1,6 @@
 import os
-# os.chdir("/home/project/workspace-utils/workspace-ui")
+# os.chdir('/home/project/workspace-cli/wrcli/workspace_ui')
+# conf_file = "/home/project/workspace-cli/tests/conf_parse/workspace-opt-field-miss-val.yaml"
 from gvars import *
 from init_ui import init_ui
 
