@@ -32,7 +32,7 @@ styles:
 # (tools to add to the Quickstart UI)
 pages:
   home:
-    - name: REDIS_COMMANDER  # for ENV var. Must be uppercase without special characters
+    - name: Redis commander
       port: 8032 # allowed strictly between 8031 - 8040
       path: /
       title: Redis Commander
@@ -43,7 +43,7 @@ pages:
       port: 8033 # allowed strictly between 8031 - 8040
       title: Blast Radius
       description: "Schedule jobs, manage schedules, observe and monitor executions"
-      image: cronicle.jpg
+      image: blast-radius.png
   my_apps:
     - name: ANSIBLE_ARA
       port: 8031  # allowed strictly between 8031 - 8040

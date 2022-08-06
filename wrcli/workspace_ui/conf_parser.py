@@ -5,6 +5,7 @@ import logging
 import os
 from pathlib import Path
 import yaml
+import re
 from cerberus import Validator
 schema = eval(open(Path(__file__).with_name('config_schema.py'), 'r').read())
 
@@ -143,7 +144,7 @@ def get_ui_images(wrk_params):
     return required_images
 
 
-def check_images_present(wrk_params, files):
+def check_images_present(wrk_params, files=[]):
     """ {}, [] -> bool
     Recieves the list of files in the config folder,
     and the wrk_params dict. Identifies which images are used, 
@@ -159,14 +160,14 @@ def check_images_present(wrk_params, files):
     def img_present(sub, slist):
         for s in slist:
             if sub in s: 
-                logging.debug(f"found image {image_name}")
+                logging.debug(f"found image {image_name} in {s}")
                 return True
-        logging.debug(f"could not find image {image_name}")
         return False
     required_images = get_ui_images(wrk_params)
     for image_name in required_images:
         logging.debug(f"looking for image {image_name}")
-        assert img_present(image_name, required_images), f"Image {image_name} is defined in the workspace.yaml file, but it is not present in the same folder"
+        if not img_present(image_name, [str(f) for f in files]):
+            raise Exception(f"Image {image_name} is defined in the workspace.yaml file, but it is not present in the same folder")
     return True
 
     

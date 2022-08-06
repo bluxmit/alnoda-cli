@@ -99,6 +99,7 @@
                     {
                         'required': True,
                         'type': 'string',
+                        'regex': r'[0-9a-zA-Z_]+'
                     },
                     'port': 
                     {
