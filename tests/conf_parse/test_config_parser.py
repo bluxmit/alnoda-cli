@@ -1,6 +1,6 @@
 import pytest
 from pathlib import Path
-from wrcli.workspace_ui.conf_parser import *
+from wrcli.build.conf_parser import *
 import yaml
 import os
 
