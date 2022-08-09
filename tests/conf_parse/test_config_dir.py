@@ -1,6 +1,6 @@
 import pytest
 from pathlib import Path, PosixPath
-from wrcli.build.conf_parser import *
+from wrcli.wrk_build.conf_parser import *
 from tests.conf_parse.test_config_parser import read_test_conf
 import yaml
 import os

@@ -1,6 +1,6 @@
 import pytest
 from pathlib import Path
-from wrcli.build.conf_parser import *
+from wrcli.wrk_build.conf_parser import *
 import yaml
 import os
 
