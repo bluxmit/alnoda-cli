@@ -14,9 +14,10 @@ from pathlib import Path
 from distutils.dir_util import copy_tree
 from ..globals import WORKSPACE_DIR, WORKSPACE_HOME_PAGES
 
-mkdocs_yml_path = f"{WORKSPACE_DIR}/ui/mkdocs.yml"
-mkdocs_assets_dir = f"{WORKSPACE_DIR}/ui/docs/assets/"
-mkdocs_about_md_file = f"{WORKSPACE_DIR}/ui/docs/about.md"
+
+mkdocs_yml_path = os.path.join(WORKSPACE_UI_DIR, 'mkdocs.yml') 
+mkdocs_assets_dir = os.path.join(WORKSPACE_UI_DIR, 'docs', 'assets')
+mkdocs_about_md_file = os.path.join(WORKSPACE_UI_DIR, 'docs', 'about.md')
 
 
 def get_mkdocs_yml():
@@ -57,10 +58,14 @@ def update_required_ui_params(wrk_params, conf_dir_path):
     doc_url = wrk_params["doc_url"]
     about = wrk_params["about"]
     # Fetch existing mkdocs.yml file, make updates and save back
+    # name
     mkdocs_dict = get_mkdocs_yml()
     mkdocs_dict["site_name"] = name
+    # docs link
     for p in mkdocs_dict["nav"]:
         if 'Docs' in p.keys(): p['Docs'] = doc_url
+    update_mkdocs_yml(mkdocs_dict)  # <- update mkdocs.yml now
+    # about page
     with open(mkdocs_about_md_file, "w") as md_file:
         md_file.write(about)
     return
@@ -80,10 +85,10 @@ def update_logo(wrk_params, conf_dir_path):
     if 'logo' in wrk_params:
         # Update mkdocs.yml
         mkdocs_dict = get_mkdocs_yml()
-        mkdocs_dict['theme']['logo'] = f'assets/{wrk_params["logo"]}'
+        mkdocs_dict['theme']['logo'] = os.path.join('assets', wrk_params["logo"])
         update_mkdocs_yml(mkdocs_dict)
         # Copy file
-        logo_file = f'{conf_dir_path}/{wrk_params["logo"]}'
+        logo_file = os.path.join(conf_dir_path, wrk_params["logo"])
         shutil.copy2(logo_file, mkdocs_assets_dir)
         logging.debug(f"logo updated from file {logo_file}")
     return
@@ -103,10 +108,10 @@ def update_favicon(wrk_params, conf_dir_path):
     if 'favicon' in wrk_params:
         # Update mkdocs.yml
         mkdocs_dict = get_mkdocs_yml()
-        mkdocs_dict['theme']['favicon'] = f'assets/{wrk_params["favicon"]}'
+        mkdocs_dict['theme']['favicon'] = os.path.join('assets', wrk_params["favicon"])
         update_mkdocs_yml(mkdocs_dict)
         # Copy file
-        favicon_file = f'{conf_dir_path}/{wrk_params["favicon"]}'
+        favicon_file = os.path.join(conf_dir_path, wrk_params["favicon"])
         shutil.copy2(favicon_file, mkdocs_assets_dir)
         logging.debug(f"favicon updated from file {favicon_file}")
     return
@@ -130,6 +135,19 @@ def move_page_assets():
     Copy respective assets (images) to the UI folder from the user's config dir
     """
     pass
+
+
+def read_ui_conf():
+    """ ->> {}
+    Reads existing workspace UI json, and returns dict.
+
+    :return: existing UI app configuration
+    :rtype: dict
+    """
+    ui_dict = os.path.join(WORKSPACE_UI_DIR, 'conf', 'ui-apps.json')
+    with open(ui_dict) as json_file:
+        ui_apps = json.load(json_file)
+    return ui_apps
 
 
 def build_wrk_ui(wrk_params, conf_dir_path):

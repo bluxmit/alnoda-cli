@@ -15,7 +15,6 @@ REQUIRED_KEYS = {
     'doc_url': 'Workspace must have documentation. Please add to the workspace.yaml a key "doc_url" with the link to the documentation URL',
     'about': 'Workspace needs a description. Please add to the workspace.yaml a key "about" with a short description', 
     }
-QUICKSTART_PAGES = ["home", "admin", "my_apps"]
 ALLOWED_IMAGE_EXTENSIONS = ["svg", "png", "jpeg", "jpg"]
 
 
