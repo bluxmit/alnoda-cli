@@ -4,6 +4,7 @@ in the orkspace folder. Update pages, styles, images, logos etc.
 """
 import os 
 import shutil
+import sass
 # os.chdir('/home/project/workspace-cli/wrcli/build')
 # this_path = '/home/project/workspace-cli/wrcli/build'
 # conf_file = "/home/project/workspace-cli/tests/conf_parse/workspace-opt-field-miss-val.yaml"
@@ -11,11 +12,13 @@ import shutil
 import logging
 import json, yaml
 from pathlib import Path
+from jinja2 import Template
 from distutils.dir_util import copy_tree
 from ..globals import WORKSPACE_DIR, WORKSPACE_HOME_PAGES
-
+from .ui_styles import styles_str
 
 mkdocs_yml_path = os.path.join(WORKSPACE_UI_DIR, 'mkdocs.yml') 
+mkdocs_extra_css_path = os.path.join(WORKSPACE_UI_DIR, 'docs', 'stylesheets', 'extra.css') 
 mkdocs_assets_dir = os.path.join(WORKSPACE_UI_DIR, 'docs', 'assets')
 mkdocs_about_md_file = os.path.join(WORKSPACE_UI_DIR, 'docs', 'about.md')
 
@@ -48,10 +51,10 @@ def update_required_ui_params(wrk_params, conf_dir_path):
     """ {}, str ->> 
     Update required ui parameters, such as workspace name
 
-    :param mkdocs_dict: dict with main configuration for MkDocs
+    :param wrk_params: dict with the workspace parameters
     :type wrk_params: dict
     :param conf_dir_path: path to the user's workspace config folder
-    :type wrk_params: str
+    :type conf_dir_path: str
     """
     # Extract required workspace parameters
     name = wrk_params["name"]
@@ -71,16 +74,36 @@ def update_required_ui_params(wrk_params, conf_dir_path):
     return
 
 
+def update_optional_ui_params(wrk_params, conf_dir_path):
+    """ {}, str ->> 
+    Update optional ui parameters, such as workspace home page font
+
+    :param wrk_params: dict with the workspace parameters
+    :type wrk_params: dict
+    :param conf_dir_path: path to the user's workspace config folder
+    :type conf_dir_path: str
+    """
+    # Extract optional workspace parameters
+    ## font
+    if 'styles' in wrk_params and 'font' in wrk_params['styles']:
+        mkdocs_dict = get_mkdocs_yml()
+        if 'font' not in mkdocs_dict['theme']: 
+            mkdocs_dict['theme']['font'] = {}
+        mkdocs_dict['theme']['font']['text'] = wrk_params['styles']['font']
+        update_mkdocs_yml(mkdocs_dict)
+    return
+
+
 def update_logo(wrk_params, conf_dir_path):
     """ {}, str ->> 
     Update existing workspace UI - change logo icon. 
     It checks whether new logo is defined in the wrk_params.
     If yes, uploads the logo file to the respective UI folder, and changes the mkdocs.yml file 
 
-    :param mkdocs_dict: dict with main configuration for MkDocs
+    :param wrk_params: dict with the workspace parameters
     :type wrk_params: dict
     :param conf_dir_path: path to the user's workspace config folder
-    :type wrk_params: str
+    :type conf_dir_path: str
     """
     if 'logo' in wrk_params:
         # Update mkdocs.yml
@@ -100,10 +123,10 @@ def update_favicon(wrk_params, conf_dir_path):
     It checks whether new favicon is defined in the wrk_params.
     If yes, uploads the favicon file to the respective UI folder, and changes the mkdocs.yml file
 
-    :param mkdocs_dict: dict with main configuration for MkDocs
+    :param wrk_params: dict with the workspace parameters
     :type wrk_params: dict
     :param conf_dir_path: path to the user's workspace config folder
-    :type wrk_params: str
+    :type conf_dir_path: str
     """
     if 'favicon' in wrk_params:
         # Update mkdocs.yml
@@ -118,14 +141,37 @@ def update_favicon(wrk_params, conf_dir_path):
 
 
 def update_ui_styles(wrk_params):
-    """
+    """ {} ->> 
     Update existing workspace UI - change CSS styles
+
+    :param wrk_params: dict with the workspace parameters
+    :type wrk_params: dict
     """
+    # create dict with style settings
+    d_styles = {}
+    if 'styles' in wrk_params:
+        if 'colors' in wrk_params['styles']:
+            d_styles.update(wrk_params['styles']['colors'])
+        if 'common_colors' in wrk_params['styles']:
+            d_styles.update({'common_colors': wrk_params['styles']['common_colors']})
+    if len(styles.keys()) > 0:      
+        # generate jinja template
+        tm = Template(styles_str)
+        new_styles = tm.render({'styles': d_styles})
+        # save styles to mkdocs stylesheet
+        with open(mkdocs_extra_css_path, "w") as styles_file:
+            styles_file.write(new_styles)
+    return
 
 
-def merge_ui_pages(ui_apps, wrk_params):
-    """ 
-    Update the existing UI dict with the new configurations, parsed from the user's config dir
+def update_home_page(ui_apps, wrk_params):
+    """ {}, str ->> 
+    Update the Home page, if additional apps were added to this page
+
+    :param wrk_params: dict with the workspace parameters
+    :type wrk_params: dict
+    :param conf_dir_path: path to the user's workspace config folder
+    :type conf_dir_path: str
     """
     pass
 
@@ -156,6 +202,7 @@ def build_wrk_ui(wrk_params, conf_dir_path):
     which is saved to the workspace UI folder
     """
     update_required_ui_params(wrk_params, conf_dir_path)
+    update_optional_ui_params(wrk_params, conf_dir_path)
     update_logo(wrk_params, conf_dir_path)
     update_favicon(wrk_params, conf_dir_path)
 

@@ -63,7 +63,7 @@
                             'required': False,
                             'type': 'string',
                         },
-                        'title': 
+                        'subtitle': 
                         {
                             'required': False,
                             'type': 'string',
@@ -73,8 +73,31 @@
                             'required': False,
                             'type': 'string',
                         },
+                        'title': 
+                        {
+                            'required': False,
+                            'type': 'string',
+                        },
                     }
                 },
+            },
+            'common_colors':
+            {
+                'required': False,
+                'type': 'dict',
+                'schema':
+                {
+                    'header': 
+                    {
+                        'required': False,
+                        'type': 'string',
+                    },
+                    'nav': 
+                    {
+                        'required': False,
+                        'type': 'string',
+                    },
+                }
             },
         },
     },

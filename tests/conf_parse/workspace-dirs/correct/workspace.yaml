@@ -25,8 +25,11 @@ styles:
       primary: "#3C3C3C"
       accent: "#E77260"
       background: "#1E1E1E"
-      title: "9CDCFE"
-      text: "9CDCFE"
+      title: "#9CDCFE"
+      text: "#9CDCFE"
+  common_colors:
+    header: "#FFFFFF"
+    nav: "#eab676"
 
 # optional:
 # (tools to add to the Quickstart UI)

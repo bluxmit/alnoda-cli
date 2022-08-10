@@ -8,12 +8,12 @@ about: |
   *(created by authentic-apostol, authentic.apostol@gmail.com)*
 
 # optional
-# (Quickstart UI icons)
+# (Homepage UI icons)
 logo: white-icon.svg
 favicon: dark-icon.svg
 
-# optional:
-# (Quickstart UI appearance)
+# optional (all elements):
+# (Homepage UI appearance)
 styles:
   font: Roboto  # chose any from https://fonts.google.com/
   colors:
@@ -25,11 +25,15 @@ styles:
       primary: "#3C3C3C"
       accent: "#E77260"
       background: "#1E1E1E"
-      title: "9CDCFE"
-      text: "9CDCFE"
+      title: "#9CDCFE"
+      text: "#9CDCFE"
+  common_colors:
+    header: "#FFFFFF"
+    nav: "#eab676"
+
 
 # optional:
-# (tools to add to the Quickstart UI)
+# (tools to add to the Homepage UI)
 pages:
   home:
     - name: REDIS_COMMANDER
