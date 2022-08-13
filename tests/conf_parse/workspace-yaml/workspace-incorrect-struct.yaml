@@ -2,7 +2,9 @@
 # mandatory
 name: Awesome workspace
 doc_url: link to the documentation page
-about: |
+author: bluxmit
+version: 4.0
+description: |
   # Workspace for awesome work. 
   Portable containerized development environment for awesome challenges
   *(created by authentic-apostol, authentic.apostol@gmail.com)*

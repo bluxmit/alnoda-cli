@@ -7,8 +7,15 @@ import logging
 import json, yaml
 from pathlib import Path
 from distutils.dir_util import copy_tree
+from .meta_about import update_meta_and_about
 from .conf_parser import read_conf_dir
 from ..globals import *
+
+SUPERVISORD_FOLDER = "/etc/supervisord"
+
+supervisord_template = """
+
+"""
 
 
 def init_wrk():
@@ -20,7 +27,9 @@ def init_wrk():
         if not Path(WORKSPACE_DIR).is_dir():
             logging.info('Initiating workspace...')
             this_path = os.path.dirname(os.path.realpath(__file__))
-            copy_tree(os.path.join(this_path, 'ui'), WORKSPACE_UI_DIR)
+            copy_tree(os.path.join(this_path, 'wrk'), WORKSPACE_DIR)
+            # update meta 
+            update_meta()   #<- only update created date
         else:
             logging.info('Workspace initialized')
     except:
@@ -29,39 +38,11 @@ def init_wrk():
     return True
 
 
-
-
-
-
-
-
-
-
-
-#### Start apps & logs
-
-def generate_app_log_dir():
+def add_startup_application():
     """
-    Create folder in /var/log/wrk-apps for this application
+    Add command to start application
     """
     pass
-
-
-def generate_app_start_command():
-    """
-    Generate supervisord file for the app to start
-    """
-    pass
-
-
-def build_ui(conf_dir_path):
-    """
-    Rebuilds UI: icons, styles, fonts, pages
-    """
-    pass
-
-
-
 
 
 def build_workspace(conf_dir_path):
@@ -77,6 +58,15 @@ def build_workspace(conf_dir_path):
         raise Exception("There was a problem initializing workspace UI")
     # Read new user configs_dir
     wrk_params, files = read_conf_dir(conf_dir_path)
+    # update meta.json and refresh About page 
+    update_meta(
+        name = wrk_params['name'],
+        version = wrk_params['version'],
+        author = wrk_params['author'],
+        description = wrk_params['description']
+    )
+    refresh_about_from_meta()
+    
 
 
 

@@ -13,7 +13,7 @@ schema = eval(open(Path(__file__).with_name('config_schema.py'), 'r').read())
 REQUIRED_KEYS = {
     'name': 'Workspace requires name. Please add to the workspace.yaml a key "name"',
     'doc_url': 'Workspace must have documentation. Please add to the workspace.yaml a key "doc_url" with the link to the documentation URL',
-    'about': 'Workspace needs a description. Please add to the workspace.yaml a key "about" with a short description', 
+    'description': 'Workspace needs a description. Please add to the workspace.yaml a key "description" with a short description', 
     }
 ALLOWED_IMAGE_EXTENSIONS = ["svg", "png", "jpeg", "jpg"]
 

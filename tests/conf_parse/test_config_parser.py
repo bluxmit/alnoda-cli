@@ -6,7 +6,7 @@ import os
 
 def read_test_conf(conf_file):
     dirpath = os.path.dirname(Path(__file__))
-    with open(f"{dirpath}/workspace-yaml/{conf_file}", 'r') as stream:
+    with open(os.path.join(dirpath, 'workspace-yaml', conf_file), 'r') as stream:
         wrk_params = yaml.safe_load(stream)
     return wrk_params
 
@@ -34,7 +34,7 @@ def test_missing_descr_val():
     wrk_params = read_test_conf('workspace-no-descr-val.yaml')
     with pytest.raises(Exception) as e:
         validate_main_required_keys_present(wrk_params)
-    assert REQUIRED_KEYS["about"] in str(e.value) 
+    assert REQUIRED_KEYS["description"] in str(e.value) 
     assert e.type == Exception
 
 def test_valid_schema():
@@ -80,7 +80,7 @@ def test_invalid_schema_miss_descr():
     wrk_params = read_test_conf('workspace-no-descr-val.yaml')
     with pytest.raises(Exception) as e:
         assert validate_schema(wrk_params)
-    assert "{'about': ['null value not allowed']}" in str(e.value)
+    assert "{'description': ['null value not allowed']}" in str(e.value)
     assert e.type == Exception
 
 def test_invalid_schema_opt_field_miss_val():

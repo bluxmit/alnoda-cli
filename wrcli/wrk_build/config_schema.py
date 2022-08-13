@@ -8,7 +8,16 @@
         'required': True,
         'type': 'string',
     },
-    'about': 
+    'author': 
+    {
+        'required': True,
+        'type': 'string',
+    },
+    'version': 
+    {
+        'required': True,
+    },
+    'description': 
     {
         'required': True,
         'type': 'string',

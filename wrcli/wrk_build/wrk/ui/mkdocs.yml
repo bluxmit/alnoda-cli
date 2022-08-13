@@ -4,7 +4,7 @@
 
 nav:
   - Home: README.md
-  - My apps: pages/my-apps.md
+  - My apps: pages/my_apps.md
   - About: about.md
   - Docs: https://docs.alnoda.org/
 
