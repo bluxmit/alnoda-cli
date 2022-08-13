@@ -15,23 +15,9 @@ from datetime import date
 from .conf_parser import read_conf_dir
 from jinja2 import Template
 from ..globals import *
+from .templates import about_page_template
 
 WORKSPACE_ABOUT_FILE = os.path.join(WORKSPACE_UI_DIR, 'docs', 'about.md')
-
-
-about_page_template = """
-## About
-
-| Name      | {{ name }}                          |
-| ----------- | ------------------------------------ |
-| version       | {{ version }} |
-| author       | {{ author }} |
-| created    | {{ created }} |
-
-## Description  
-
-{{ description }}
-"""
 
 
 def read_meta():

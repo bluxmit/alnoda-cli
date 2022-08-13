@@ -16,7 +16,8 @@ from jinja2 import Template
 from distutils.dir_util import copy_tree
 from ..globals import WORKSPACE_UI_DIR
 from .ui_styles import styles_str
-from .app_md_page import app_page_str
+from .templates import app_page_str
+from .meta_about import update_meta, refresh_about_from_meta
 
 mkdocs_yml_path = os.path.join(WORKSPACE_UI_DIR, 'mkdocs.yml') 
 mkdocs_extra_css_path = os.path.join(WORKSPACE_UI_DIR, 'docs', 'stylesheets', 'extra.css') 
@@ -87,7 +88,7 @@ def update_required_ui_params(wrk_params, conf_dir_path):
     # Extract required workspace parameters
     name = wrk_params["name"]
     doc_url = wrk_params["doc_url"]
-    about = wrk_params["about"]
+    description = wrk_params["description"]
     # Fetch existing mkdocs.yml file, make updates and save back
     # name
     mkdocs_dict = get_mkdocs_yml()
@@ -97,8 +98,7 @@ def update_required_ui_params(wrk_params, conf_dir_path):
         if 'Docs' in p.keys(): p['Docs'] = doc_url
     update_mkdocs_yml(mkdocs_dict)  # <- update mkdocs.yml now
     # about page
-    with open(mkdocs_about_md_file, "w") as md_file:
-        md_file.write(about)
+    update_meta(description=description); refresh_about_from_meta()
     return
 
 
@@ -296,7 +296,7 @@ def update_other_pages(wrk_params, conf_dir_path):
 
 
 def build_wrk_ui(wrk_params, conf_dir_path):
-    """
+    """ {}, str ->>
     Gets existing UI config and the new user's config. And builds the new UI config,
     which is saved to the workspace UI folder.
 
@@ -316,3 +316,4 @@ def build_wrk_ui(wrk_params, conf_dir_path):
     # pages
     update_home_page(wrk_params, conf_dir_path)
     update_other_pages(wrk_params, conf_dir_path)
+    return

@@ -58,10 +58,10 @@ start:
   - name: ANSIBLE_ARA
     cmd: "ara-manage runserver 0.0.0.0:8031"
   - name: CRONICLE
-    dir: "/opt/cronicle"
+    folder: "/opt/cronicle"
     cmd: "rm /opt/cronicle/logs/cronicled.pid || true; cd /opt/cronicle; . env/bin/activate; /opt/cronicle/bin/control.sh setup; /opt/cronicle/bin/control.sh start"
   - name: REDIS_COMMANDER
-    dir: "/opt/redis-commander"
+    folder: "/opt/redis-commander"
     cmd: ". env/bin/activate && redis-commander --port=8029"
 
 

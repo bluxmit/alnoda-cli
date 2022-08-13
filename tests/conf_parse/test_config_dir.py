@@ -6,7 +6,6 @@ import yaml
 import os
 
 
-
 def get_full_conf_dir_path(conf_dir_path):
     dirpath = os.path.dirname(Path(__file__))
     fullpath = f"{dirpath}/workspace-dirs/{conf_dir_path}"

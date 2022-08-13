@@ -183,7 +183,7 @@
                     'required': True,
                     'type': 'string',
                 },
-                'dir': 
+                'folder': 
                 {
                     'required': False,
                     'type': 'string',
