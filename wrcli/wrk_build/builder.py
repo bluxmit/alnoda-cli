@@ -49,11 +49,11 @@ def create_supervisord_file(name, cmd, folder=None):
     :type folder: str
     """
     params = {"name": name, "cmd": cmd}
-    if folder: params["folder": folder]
+    if folder: params["folder"] = folder
     tm = Template(supervisord_template)
     supervisord_file = tm.render(params)
     # write file to the supervisord folder
-    supervisor_file = os.path.join(SUPERVISORD_FOLDER, f"{app_name}.conf")
+    supervisor_file = os.path.join(SUPERVISORD_FOLDER, f"{name}.conf")
     with open(supervisor_file, "w") as _file:
         _file.write(supervisord_file)
     logging.debug(f"creating startup for {name}")

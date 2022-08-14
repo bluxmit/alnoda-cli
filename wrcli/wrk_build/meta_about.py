@@ -55,7 +55,7 @@ def read_about():
     :rtype: str
     """
     with open(WORKSPACE_ABOUT_FILE) as f:
-        about_raw = f.read()
+        about = f.read()
     return about
 
 
@@ -71,8 +71,8 @@ def write_about(about):
     return
 
 
-def update_meta(name=None, version=None, author=None, description=None):
-    """ str, str, str, str ->> 
+def update_meta(name=None, version=None, author=None, description=None, update_created=True):
+    """ str, str, str, str, bool ->> 
     Updates meta.json. When called without any args, it will 
     update 'created' field only. 
 
@@ -84,6 +84,8 @@ def update_meta(name=None, version=None, author=None, description=None):
     :type author: str
     :param description: workspace description
     :type description: str
+    :param update_created: should 'created' be updated in the meta.json? (Default is True)
+    :type update_created: bool
     """
     meta_dict = read_meta()
     if name is not None:
@@ -94,7 +96,8 @@ def update_meta(name=None, version=None, author=None, description=None):
         meta_dict['author'] = author
     if description is not None:
         meta_dict['description'] = description
-    meta_dict['created'] = str(date.today())
+    if update_created:
+        meta_dict['created'] = str(date.today())
     write_meta(meta_dict)
     return
 

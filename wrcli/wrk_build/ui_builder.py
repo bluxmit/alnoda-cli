@@ -22,7 +22,6 @@ from .meta_about import update_meta, refresh_about_from_meta
 mkdocs_yml_path = os.path.join(WORKSPACE_UI_DIR, 'mkdocs.yml') 
 mkdocs_extra_css_path = os.path.join(WORKSPACE_UI_DIR, 'docs', 'stylesheets', 'extra.css') 
 mkdocs_assets_dir = os.path.join(WORKSPACE_UI_DIR, 'docs', 'assets')
-mkdocs_about_md_file = os.path.join(WORKSPACE_UI_DIR, 'docs', 'about.md')
 ui_dict_file = os.path.join(WORKSPACE_UI_DIR, 'conf', 'ui-apps.json')
 mkdocs_home_page_assets_dir = os.path.join(WORKSPACE_UI_DIR, 'docs', 'assets')
 mkdocs_other_page_assets_dir = os.path.join(WORKSPACE_UI_DIR, 'docs', 'pages')
@@ -87,8 +86,10 @@ def update_required_ui_params(wrk_params, conf_dir_path):
     """
     # Extract required workspace parameters
     name = wrk_params["name"]
-    doc_url = wrk_params["doc_url"]
+    version = wrk_params["version"]
+    author = wrk_params["author"]
     description = wrk_params["description"]
+    doc_url = wrk_params["doc_url"]
     # Fetch existing mkdocs.yml file, make updates and save back
     # name
     mkdocs_dict = get_mkdocs_yml()
@@ -97,8 +98,13 @@ def update_required_ui_params(wrk_params, conf_dir_path):
     for p in mkdocs_dict["nav"]:
         if 'Docs' in p.keys(): p['Docs'] = doc_url
     update_mkdocs_yml(mkdocs_dict)  # <- update mkdocs.yml now
-    # about page
-    update_meta(description=description); refresh_about_from_meta()
+    # meta & about page
+    update_meta(
+        name=name, 
+        version=version,
+        author=author,
+        description=description
+        ); refresh_about_from_meta()
     return
 
 
@@ -182,7 +188,7 @@ def update_ui_styles(wrk_params):
             d_styles.update(wrk_params['styles']['colors'])
         if 'common_colors' in wrk_params['styles']:
             d_styles.update({'common_colors': wrk_params['styles']['common_colors']})
-    if len(styles.keys()) > 0:      
+    if len(d_styles.keys()) > 0:      
         # generate jinja template
         tm = Template(styles_str)
         new_styles = tm.render({'styles': d_styles})
